@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function uploadFiles(Request $r) {
+        $appkey = $r->query('appkey');
+        if (env('APP_KEY') != $appkey) {
+            return response()->json('App key is not correct.', 500);
+        }
         $file = $r->file('file');
         $clientFilename = $file->getClientOriginalName();
 
